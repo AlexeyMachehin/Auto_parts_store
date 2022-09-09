@@ -9,13 +9,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(__dirname + "/assets"));
 app.use("/api/products", require("./routes/products"));
 
-// app.get("/api/products", (req, res) => {
-//   res.send("HI");
-// });
+app.get("/api/products", (req, res) => {
+  res.send("HI");
+});
 
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "build", "index.html"))
-);
+// app.get("*", (req, res) =>
+//   res.sendFile(path.join(__dirname, "build", "index.html"))
+// );
 
 mongoose.connect("mongodb://localhost:27017").then(() => {
   app.listen(port, () => {
