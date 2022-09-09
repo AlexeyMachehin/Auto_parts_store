@@ -2,7 +2,7 @@
   "name": "auto_parts_store",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://alexeymachehin.github.io/Auto_parts_store/",
+
   "proxy": "http://localhost:8000",
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -30,7 +30,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build && move build ./docs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
