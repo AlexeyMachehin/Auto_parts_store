@@ -1,0 +1,71 @@
+[{
+    "_id": "631f6dfd8332fbe8c971ef0c",
+    "name": "двигатель 21083",
+    "catalogueNumber": "222",
+    "manufacturer": "Скиф",
+    "quantity": 2,
+    "unitOfMeasurement": "шт",
+    "wholesalePrice": 1000,
+    "retailPrice": 1500
+},
+{
+    "_id": "631f838b8332fbe8c971ef77",
+    "name": "Бензонасос 2110 (инж.) BOSCH 0 580453453",
+    "catalogueNumber": "2112-1139008",
+    "manufacturer": "Германия",
+    "quantity": 7,
+    "unitOfMeasurement": "шт",
+    "wholesalePrice": 2000,
+    "retailPrice": 2500
+},
+{
+    "_id": "631f83f98332fbe8c971ef79",
+    "name": "Маслоотражатели 2101 Хорс",
+    "catalogueNumber": "2101-1007026",
+    "manufacturer": "С-Петербург",
+    "quantity": 37,
+    "unitOfMeasurement": "к-т",
+    "wholesalePrice": 100,
+    "retailPrice": 150
+},
+{
+    "_id": "631f84498332fbe8c971ef7d",
+    "name": "Пружины задние 2101 Фобос",
+    "catalogueNumber": "2101-2912712",
+    "manufacturer": "Орел",
+    "quantity": 5,
+    "unitOfMeasurement": "к-т",
+    "wholesalePrice": 1300,
+    "retailPrice": 1700
+},
+{
+    "_id": "631f84898332fbe8c971ef81",
+    "name": "Успокоитель цепи 21213",
+    "catalogueNumber": "21213-1006100",
+    "manufacturer": "Сызрань",
+    "quantity": 8,
+    "unitOfMeasurement": "шт",
+    "wholesalePrice": 20,
+    "retailPrice": 50
+},
+{
+    "_id": "631f85c2a1fb81ac2223df85",
+    "name": "Провода прикуривателя 300А",
+    "catalogueNumber": "",
+    "manufacturer": "ОАЭ",
+    "quantity": 14,
+    "unitOfMeasurement": "к-т",
+    "wholesalePrice": 180,
+    "retailPrice": 300
+},
+{
+    "_id": "6320c92ae60bc19c1e21ab58",
+    "name": "Провода прикуривателя 300А",
+    "catalogueNumber": "",
+    "manufacturer": "ОАЭ",
+    "quantity": 14,
+    "unitOfMeasurement": "к-т",
+    "wholesalePrice": 180,
+    "retailPrice": 300,
+    "__v": 0
+}]

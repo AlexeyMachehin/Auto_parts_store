@@ -16,6 +16,16 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Navigate } from "react-router-dom";
+import { useAppSelector
+  //  useMemo
+   } from "../app/hooks";
+import {
+  selectorCountProductsInCart,
+  selectorProductsInCart,
+} from "../redux/selectors";
+import { localStorageUtil } from "../utils/localStorageUtil";
+import { Product } from "../interfaces/product";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,6 +68,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  // const productsInCart = useAppSelector(selectorProductsInCart);
+
+  const countProductsInCart = useAppSelector(selectorCountProductsInCart);
+
+
+  // const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [productsInCart]);
+
+  // let productFromLocalStorage = localStorageUtil.getProducts()
+  // (newProduct?.quantityInCart ?? 0)
+  //  let sum = productFromLocalStorage.reduce((acc: number, product: Product)=>acc + (product.quantityInCart ?? 0))
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -161,7 +182,6 @@ export default function Header() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -196,8 +216,14 @@ export default function Header() {
               size="large"
               aria-label="show purchases"
               color="inherit"
+              onClick={() => (window.location.href = "/Cart")}
             >
-              <Badge badgeContent={17} color="error">
+              <Badge
+                // badgeContent={productsInCart ? productsInCart.length : 0}
+                badgeContent={countProductsInCart}
+                // badgeContent={memoizedValue}
+                color="error"
+              >
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

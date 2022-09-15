@@ -17,8 +17,16 @@ app.get("/api/products", (req, res) => {
 //   res.sendFile(path.join(__dirname, "build", "index.html"))
 // );
 
-mongoose.connect("mongodb://localhost:27017").then(() => {
+mongoose.connect("mongodb+srv://Alex:a135B742@cluster0.0o7qmbt.mongodb.net/?retryWrites=true&w=majority").then(() => {
   app.listen(port, () => {
     console.log(`app listens on port  + ${port}`);
   });
 });
+
+
+// mongoose.connect("mongodb://localhost:27017").then(() => {
+//   app.listen(port, () => {
+//     console.log(`app listens on port  + ${port}`);
+//   });
+// });
+

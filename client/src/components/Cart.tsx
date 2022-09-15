@@ -1,5 +1,5 @@
-import Header from "./HomePage/Header";
-import ProductTable from "./ProductTable";
+import Header from "./Header";
+import ProductTable from "./ProductTable/ProductTable";
 
 export default function Cart() {
   return (

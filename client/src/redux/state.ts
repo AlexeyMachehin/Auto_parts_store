@@ -1,13 +1,14 @@
 import { ProductsState } from "../interfaces/product";
 
 export const initialState: ProductsState = {
-
   products: null,
   isError: false,
   isLoading: false,
   message: "",
-}
-
+  productsInCart: [],
+  discountDates: null,
+  countProductsInCart: null,
+};
 
 // const productSchema = mongoose.Schema({
 //     name: { type: String, required: true },
