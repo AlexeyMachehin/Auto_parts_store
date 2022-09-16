@@ -12,3 +12,4 @@ export const selectorAllProducts = createSelector([select], (store) => store.pro
 export const  selectorProductsInCart = createSelector([select], (store) => store.products.productsInCart)
 
 export const selectorCountProductsInCart = createSelector([select], (store) => store.products.countProductsInCart)
+
