@@ -15,38 +15,35 @@ export class LocalStorageUtil {
     return [];
   }
   getOneProduct(id: string): Product | null {
-    const product = this.products.find(
-      (el: Product) => el.id === id
-    );
+    const product = this.products.find((el: Product) => el.id === id);
     if (product) {
       return product;
     }
     return null;
   }
-  putProducts(product: Product) {
-    const productCopy = {
-      ...product,
-      quantityInCart: 0,
-    };
+
+  manageProducts(product: Product) {
     const index = this.products.findIndex(
-      (el: Product) => el.id === productCopy.id
+      (el: Product) => el.id === product.id
     );
     if (index !== -1) {
-      const newProduct = this.getOneProduct(productCopy.id);
-      productCopy.quantityInCart = (newProduct?.quantityInCart ?? 0) + 1;
-      this.products.splice(index, 1, productCopy);
-      console.log(this.products);
+      if (product.quantityInCart === 0) {
+        this.products.splice(index, 1);
+        localStorage.setItem(this.keyName, JSON.stringify(this.products));
+        return;
+      }
+
+      this.products.splice(index, 1, product);
+
       localStorage.setItem(this.keyName, JSON.stringify(this.products));
     } else {
-      productCopy.quantityInCart = +1;
-      this.products.push(productCopy);
+      this.products.push(product);
       localStorage.setItem(this.keyName, JSON.stringify(this.products));
     }
   }
+
   deleteProduct(id: string) {
-    const index = this.products.findIndex(
-      (el: Product) => el.id === id
-    );
+    const index = this.products.findIndex((el: Product) => el.id === id);
     if (index !== -1) {
       const newProduct = this.getOneProduct(id);
 
@@ -61,7 +58,7 @@ export class LocalStorageUtil {
         this.products[index].quantityInCart = count;
         localStorage.setItem(this.keyName, JSON.stringify(this.products));
         return;
-      } 
+      }
     }
   }
 }

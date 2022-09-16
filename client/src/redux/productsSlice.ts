@@ -2,7 +2,7 @@ import { initialState } from "./state";
 import { getProducts } from "./thunk";
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { Product } from "../interfaces/product";
-import { localStorageUtil } from "../utils/localStorageUtil";
+import { localStorageUtil } from "../utils/localStorageUtils";
 
 export const productsAdapter = createEntityAdapter<Product>({
   selectId: (product) => product.id,
@@ -15,33 +15,28 @@ const productsSlice = createSlice({
     setDiscountDates(state, action) {
       state.discountDates = action.payload;
     },
-    setProductInCart(
-      state,
-      action: { payload: Product }
-    ) {
+    setProductInCart(state, action: { payload: Product }) {
       const index = state.productsInCart.findIndex(
         (el: Product) => el.id === action.payload.id
       );
+      if (action.payload.quantityInCart === 0) {
+        state.productsInCart.splice(index, 1);
+        return;
+      }
       if (index !== -1) {
         state.productsInCart.splice(index, 1, action.payload);
       } else {
         state.productsInCart.push(action.payload);
       }
-      // state.productsInCart.push(action.payload);
     },
-    setProductsInCart(
-      state,
-      action: { payload: Product[] }
-    ) {
+    setProductsInCart(state, action: { payload: Product[] }) {
       state.productsInCart = action.payload;
     },
     deleteProductFromCart(state, action: { payload: string }) {
       const index = state.productsInCart.findIndex(
         (el: Product) => el.id === action.payload
       );
-      // if (index !== -1) {
-      //   state.productsInCart.splice(index, 1);
-      // }
+
       if (state.productsInCart[index].quantityInCart === 1) {
         state.productsInCart.splice(index, 1);
       } else {
@@ -60,10 +55,19 @@ const productsSlice = createSlice({
         }
       }
 
-      // const sum = productFromLocalStorage.reduce(
-      //   (acc: number, product: Product) => acc + (product.quantityInCart ?? 0)
-      // );
       state.countProductsInCart = sum;
+    },
+    countSummInCart(state) {
+      let sum = 0;
+      if (state.productsInCart) {
+        for (let index = 0; index < state.productsInCart.length; index++) {
+          const element =
+            (state.productsInCart[index].retailPrice ?? 1) *
+            state.productsInCart[index].quantityInCart;
+          sum = sum + element;
+        }
+      }
+      state.countSummInCart = sum;
     },
   },
   extraReducers: (builder) => {
@@ -92,6 +96,7 @@ export const {
   deleteProductFromCart,
   setCountProductsInCart,
   setProductsInCart,
+  countSummInCart,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

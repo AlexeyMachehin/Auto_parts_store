@@ -30,6 +30,7 @@ export interface ProductsState {
   productsInCart: Product[];
   discountDates: [] | null;
   countProductsInCart: number | null;
+  countSummInCart: number;
 }
 
-export type CreateProduct = Omit<Product, 'id' | 'quantityInCart'>;
+export type CreateProduct = Omit<Product, "id" | "quantityInCart">;

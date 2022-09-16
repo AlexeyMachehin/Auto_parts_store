@@ -10,8 +10,6 @@ import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { Product } from "../../interfaces/product";
 import { Order } from "../../interfaces/table";
 import { getComparator, stableSort } from "./ProductTableUtils";
@@ -21,14 +19,15 @@ import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectorAllProducts,
+  selectorCountSummInCart,
   selectorProductsInCart,
 } from "../../redux/selectors";
 import { getProducts } from "../../redux/thunk";
 import AddToCartButton from "./AddToCartButton";
-import { localStorageUtil } from "../../utils/localStorageUtil";
+import { localStorageUtil } from "../../utils/localStorageUtils";
 import {
+  countSummInCart,
   setCountProductsInCart,
-  setProductInCart,
   setProductsInCart,
 } from "../../redux/productsSlice";
 
@@ -37,7 +36,7 @@ export default function ProductTable() {
   const location = useLocation();
   const products = useAppSelector(selectorAllProducts);
   const productsInCart = useAppSelector(selectorProductsInCart);
-  // const productsInCart = localStorageUtil.getProducts();
+  const summInCart = useAppSelector(selectorCountSummInCart);
 
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Product>("name");
@@ -66,6 +65,7 @@ export default function ProductTable() {
     }
     dispatch(setCountProductsInCart());
     dispatch(setProductsInCart(localStorageUtil.getProducts()));
+    dispatch(countSummInCart())
   }, []);
 
   const handleRequestSort = (
@@ -130,7 +130,8 @@ export default function ProductTable() {
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
+
+
   const emptyRows =
     page > 0
       ? Math.max(
@@ -221,6 +222,7 @@ export default function ProductTable() {
                     </TableRow>
                   );
                 })}
+            
               {emptyRows > 0 && (
                 <TableRow
                   style={{
@@ -248,7 +250,8 @@ export default function ProductTable() {
         label="Мелкий отступ"
       />
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        {location.pathname === "/Cart" && "Общая стоимость: 5000р"}
+        {location.pathname === "/Cart" &&
+          `Общая стоимость: ${new Intl.NumberFormat('ru-RU').format(summInCart)} р.`}
       </div>
     </Box>
   );
