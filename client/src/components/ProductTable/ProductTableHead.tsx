@@ -61,7 +61,7 @@ export function ProductTableHead(props: EnhancedTableProps) {
       label: "Цена",
     },
     {
-      id: "productsInCart",
+      id: "quantityInCart",
       numeric: true,
       disablePadding: false,
       label: "Товары в корзине",
@@ -96,10 +96,14 @@ export function ProductTableHead(props: EnhancedTableProps) {
           />
         </TableCell>
         {headCells.map((headCell) => {
-            if((location.pathname === "/AdminPage" && headCell.id !== "productsInCart") ||  (location.pathname !== "/AdminPage" && headCell.id !== "wholesalePrice")){
+          if (
+            (location.pathname === "/AdminPage" &&
+              headCell.id !== "quantityInCart") ||
+            (location.pathname !== "/AdminPage" &&
+              headCell.id !== "wholesalePrice")
+          ) {
             return (
               <TableCell
-              
                 key={headCell.id}
                 align={headCell.numeric ? "right" : "left"}
                 padding={headCell.disablePadding ? "none" : "normal"}

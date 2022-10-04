@@ -15,7 +15,7 @@ const productsSlice = createSlice({
     setDiscountDates(state, action) {
       state.discountDates = action.payload;
     },
-    setProductInCart(state, action: { payload: Product }) {
+    manageProductInCart(state, action: { payload: Product }) {
       const index = state.productsInCart.findIndex(
         (el: Product) => el.id === action.payload.id
       );
@@ -28,6 +28,17 @@ const productsSlice = createSlice({
       } else {
         state.productsInCart.push(action.payload);
       }
+    },
+    manageProducts(state, action: { payload: Product}) {
+      // debugger
+      
+      const index = state.products?.findIndex(
+        (el: Product) => el.id === action.payload.id
+      );
+      if (index !== -1 && index) {
+        state.products?.splice(index, 1, action.payload);
+      }
+    
     },
     setProductsInCart(state, action: { payload: Product[] }) {
       state.productsInCart = action.payload;
@@ -43,6 +54,10 @@ const productsSlice = createSlice({
         const count = state.productsInCart[index].quantityInCart - 1;
         state.productsInCart[index].quantityInCart = count;
       }
+    },
+
+    deleteAllProductsFromCart(state) {
+      state.productsInCart = [];
     },
 
     setCountProductsInCart(state) {
@@ -92,11 +107,13 @@ const productsSlice = createSlice({
 
 export const {
   setDiscountDates,
-  setProductInCart,
+  manageProductInCart,
   deleteProductFromCart,
   setCountProductsInCart,
   setProductsInCart,
   countSummInCart,
+  deleteAllProductsFromCart,
+  manageProducts,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

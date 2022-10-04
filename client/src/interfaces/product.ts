@@ -18,7 +18,6 @@ export interface Product {
   unitOfMeasurement: string;
   wholesalePrice: number;
   retailPrice?: number;
-  productsInCart?: [];
   quantityInCart: number;
 }
 

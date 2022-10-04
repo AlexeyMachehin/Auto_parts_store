@@ -1,4 +1,3 @@
-import { EnhancedTableToolbarProps } from "../../interfaces/table";
 import { alpha } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -8,8 +7,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
+import {
+  countSummInCart,
+  deleteAllProductsFromCart,
+  setCountProductsInCart,
+} from "../../redux/productsSlice";
+import { localStorageUtil } from "../../utils/localStorageUtils";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectorProductsInCart } from "../../redux/selectors";
 
-export const ProductTableToolbar = (props: EnhancedTableToolbarProps) => {
+export const ProductTableToolbar = (props: {
+  page: string;
+  numSelected: number;
+  selectedId: readonly string[];
+}) => {
+  const productsInCart = useAppSelector(selectorProductsInCart);
+  const dispatch = useAppDispatch();
   const { numSelected } = props;
   return (
     <Toolbar
@@ -77,22 +90,35 @@ export const ProductTableToolbar = (props: EnhancedTableToolbarProps) => {
                 </div>
               )}
             </div>
+            {productsInCart.length > 0 && props.page !== "/AdminPage" && (
+              <div>
+                Очистить корзину
+                <Tooltip title="Delete">
+                  <IconButton
+                    onClick={() => {
+                      dispatch(deleteAllProductsFromCart());
+                      localStorageUtil.deleteAllProductsFromLocalStorage();
+                      dispatch(setCountProductsInCart());
+                      dispatch(countSummInCart());
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            )}
           </div>
         </Typography>
       )}
-      {props.page === "/AdminPage" && numSelected > 0 ? (
+      {numSelected > 0 ? (
         <div style={{ display: "flex" }}>
-          <Tooltip title="Edit">
-            <IconButton>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
+          {props.page === "/AdminPage" && (
+            <Tooltip title="Edit">
+              <IconButton>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          )}
         </div>
       ) : (
         <Tooltip title="Filter list">

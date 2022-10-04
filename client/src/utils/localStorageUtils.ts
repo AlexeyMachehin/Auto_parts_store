@@ -22,7 +22,7 @@ export class LocalStorageUtil {
     return null;
   }
 
-  manageProducts(product: Product) {
+  manageProductsLocalStorage(product: Product) {
     const index = this.products.findIndex(
       (el: Product) => el.id === product.id
     );
@@ -40,6 +40,10 @@ export class LocalStorageUtil {
       this.products.push(product);
       localStorage.setItem(this.keyName, JSON.stringify(this.products));
     }
+  }
+
+  deleteAllProductsFromLocalStorage(){
+    localStorage.removeItem(this.keyName)
   }
 
   deleteProduct(id: string) {

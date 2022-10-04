@@ -3,6 +3,8 @@ import { Order } from "../../interfaces/table";
 
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  // debugger
+
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }

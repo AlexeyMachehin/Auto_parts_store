@@ -31,6 +31,7 @@ import {
   setProductsInCart,
 } from "../../redux/productsSlice";
 
+
 export default function ProductTable() {
   const dispatch = useAppDispatch();
   const location = useLocation();
@@ -53,6 +54,7 @@ export default function ProductTable() {
     }
 
     if (location.pathname === "/Cart") {
+     
       setIsCart(true);
       dispatch(getProducts());
     }
@@ -60,12 +62,13 @@ export default function ProductTable() {
       (!products && location.pathname === "/") ||
       location.pathname === "/AdminPage"
     ) {
+     
       dispatch(getProducts());
       setIsCart(false);
     }
     dispatch(setCountProductsInCart());
     dispatch(setProductsInCart(localStorageUtil.getProducts()));
-    dispatch(countSummInCart())
+    dispatch(countSummInCart());
   }, []);
 
   const handleRequestSort = (
@@ -92,13 +95,13 @@ export default function ProductTable() {
 
   const handleClick = (
     event: React.MouseEvent<unknown>,
-    name: string | number
+    id: string | number
   ) => {
-    const selectedIndex = selected.indexOf(name.toString());
+    const selectedIndex = selected.indexOf(id.toString());
     let newSelected: readonly string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name.toString());
+      newSelected = newSelected.concat(selected, id.toString());
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -130,8 +133,6 @@ export default function ProductTable() {
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-
-
   const emptyRows =
     page > 0
       ? Math.max(
@@ -147,6 +148,7 @@ export default function ProductTable() {
         <ProductTableToolbar
           page={location.pathname}
           numSelected={selected.length}
+          selectedId={selected}
         />
         <TableContainer>
           <Table
@@ -215,14 +217,15 @@ export default function ProductTable() {
                         {product.retailPrice}
                       </TableCell>
                       {location.pathname !== "/AdminPage" && (
-                        <TableCell align="center">
+                        <TableCell  align="center">
                           <AddToCartButton product={product} />
+                         
                         </TableCell>
                       )}
                     </TableRow>
                   );
                 })}
-            
+
               {emptyRows > 0 && (
                 <TableRow
                   style={{
@@ -251,7 +254,9 @@ export default function ProductTable() {
       />
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         {location.pathname === "/Cart" &&
-          `Общая стоимость: ${new Intl.NumberFormat('ru-RU').format(summInCart)} р.`}
+          `Общая стоимость: ${new Intl.NumberFormat("ru-RU").format(
+            summInCart
+          )} р.`}
       </div>
     </Box>
   );
